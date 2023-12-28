@@ -1,0 +1,55 @@
+<form>
+  <h4>Filtrar Por:</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Año</mat-label>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="selectedFilter"
+      name="selectedFilter"
+      placeholder="Escribe el año"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Tipo</mat-label>
+    <mat-select [(ngModel)]="selectedType" name="type">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="movie">Película</mat-option>
+      <mat-option value="series">Serie</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="applyFilters()">
+    Aplicar Filtros
+  </button>
+</form>
+
+<div
+  *ngIf="favoriteMovies | async as favoriteMovies"
+  class="favorite-container"
+>
+  <div *ngFor="let movie of favoriteMovies" class="favorites">
+    <mat-card class="example-card">
+      <mat-card-header class="favorite-card-header">
+        <mat-card-title>{{ movie.Title | truncateText: 18 }}</mat-card-title>
+        <mat-card-subtitle>{{ movie.Year }}</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        class="img-favorite-card"
+        mat-card-image
+        src="{{ movie.Poster }}"
+        alt="Photo of {{ movie.Title }}"
+        (click)="openDetails(movie)"
+      />
+      <mat-card-content class="favorite-card-content">
+        <p>
+          {{ movie.Type }}
+        </p>
+        <button mat-icon-button class="custom-favorite-button" (click)="onToggleFavorite(movie)">
+          <mat-icon>{{ movie.isFavorite ? 'star' : 'star_border' }}</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+

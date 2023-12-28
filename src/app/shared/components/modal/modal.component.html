@@ -1,0 +1,22 @@
+
+<mat-dialog-content class="modal-content">
+  <h1><strong>{{ movieDetails.Title }}</strong></h1>
+  <div>
+    <p><strong>Año:</strong> {{ movieDetails.Year }}</p>
+    <p><strong>Clasificación:</strong> {{ movieDetails.Rated }}</p>
+    <p><strong>Genero:</strong> {{ movieDetails.Genre }}</p>
+    <p><strong>Director:</strong> {{ movieDetails.Director }}</p>
+    <p><strong>Reparto:</strong> {{ movieDetails.Actors }}</p>
+  </div>
+<div class="modal-sinopsis">
+  <h2><strong>Sinopsis:</strong></h2>
+  <h3>{{ movieDetails.Plot }}</h3>
+</div>
+
+<div class="modal-img">
+  <img src="{{ movieDetails.Poster }}" alt="">
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

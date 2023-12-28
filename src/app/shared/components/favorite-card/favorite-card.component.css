@@ -1,0 +1,28 @@
+.favorite-container{
+    display: flex;
+    margin: 50px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.favorites{
+   margin: 10px auto;
+   max-width: 260px;
+}
+
+.favorite-card-content{
+    background-color:#e8e7f7
+}
+
+.favorite-card-header{
+    background-color: #e8e7f7
+}
+
+.custom-favorite-button {
+    color: gold;
+  }
+
+  .img-favorite-card{
+    width: 260px;
+    height: 360px;
+  }

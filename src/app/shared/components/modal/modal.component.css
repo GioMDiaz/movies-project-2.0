@@ -1,0 +1,17 @@
+.modal-content{
+    background-color: #e8e7f7
+}
+
+.modal-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-sinopsis{
+    border: 2px solid lightgray;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 14px auto;
+    background-color: rgb(231, 231, 231);
+}

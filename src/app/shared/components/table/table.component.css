@@ -1,0 +1,33 @@
+.img-poster{
+    width: 2rem;
+}
+
+.table-container{
+    width: 100%;
+}
+.table-container {
+    overflow-x: auto; /* Agrega barras de desplazamiento horizontal si es necesario */
+  }
+  
+  /* Hacer la tabla más adaptable en pantallas pequeñas */
+  @media screen and (max-width: 600px) {
+    .mat-table {
+      overflow-x: auto; /* Agrega barras de desplazamiento horizontal en pantallas pequeñas */
+      display: block;
+    }
+  
+    .mat-table th, .mat-table td {
+      display: block;
+      text-align: left;
+    }
+  
+    .mat-header-row, .mat-row {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+  .custom-favorite-button {
+    color: gold;
+  }
+  

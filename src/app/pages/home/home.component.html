@@ -1,0 +1,14 @@
+<div>
+  <app-search (search)="searchMovies($event)"></app-search>
+  <app-table
+    (favoriteToggled)="onFavoriteToggled($event)"
+    [data]="movies"
+    [displayedColumns]="displayedColumns"
+  ></app-table>
+
+  <mat-paginator
+    [length]="totalResults"
+    [pageSize]="10"
+    (page)="handlePage($event)"
+  ></mat-paginator>
+</div>
