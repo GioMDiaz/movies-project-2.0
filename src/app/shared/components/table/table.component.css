@@ -6,13 +6,12 @@
     width: 100%;
 }
 .table-container {
-    overflow-x: auto; /* Agrega barras de desplazamiento horizontal si es necesario */
+    overflow-x: auto; 
   }
   
-  /* Hacer la tabla más adaptable en pantallas pequeñas */
   @media screen and (max-width: 600px) {
     .mat-table {
-      overflow-x: auto; /* Agrega barras de desplazamiento horizontal en pantallas pequeñas */
+      overflow-x: auto;
       display: block;
     }
   

@@ -1,9 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MaterialModule } from '../../../material/material.module';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
-import { Movie } from '../../../interfaces/movie.interface';
-/* import { FavoritesService } from '../../../services/favorites.service'; */
 
 @Component({
   selector: 'app-search',
