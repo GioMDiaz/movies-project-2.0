@@ -14,7 +14,12 @@
 </div>
 
 <div class="modal-img">
-  <img src="{{ movieDetails.Poster }}" alt="">
+  <img [src]="
+  movieDetails.Poster !== 'N/A'
+    ? movieDetails.Poster
+    : 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101032/112815935-no-hay-icono-de-imagen-disponible-ilustraci%C3%B3n-vectorial-plana.jpg'
+"
+alt="Photo of {{ movieDetails.Title }}">
 </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">

@@ -13,3 +13,4 @@ import { ToolBarComponent } from './layout/toolbar/toolbar.component';
 export class AppComponent {
   title = 'buscador-de-peliculas';
 }
+

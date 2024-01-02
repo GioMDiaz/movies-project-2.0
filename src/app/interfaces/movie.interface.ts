@@ -6,4 +6,7 @@ export interface Movie {
     Poster: string;
     comments?: string[];
     isFavorite?: boolean;
+    newComment?: string;
+    isEditing: boolean;
+    showComments: boolean;
   }

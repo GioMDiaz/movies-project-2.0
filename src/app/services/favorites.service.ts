@@ -59,7 +59,6 @@ export class FavoritesService {
       this.favoriteMovies.push(movieWithComments);
       this.localStorageService.set('favoriteMovies', this.favoriteMovies);
     }
-    this.favoriteMoviesSubject.next(this.favoriteMovies);
   }
 
   addOrRemoveFromFavorites(movie: Movie): void {
@@ -69,7 +68,6 @@ export class FavoritesService {
     } else {
       this.removeFromFavorites(movie.imdbID);
     }
-    this.favoriteMoviesSubject.next(this.favoriteMovies);
   }
 
   updateFavoriteStates(movies: Movie[]): void {
@@ -79,36 +77,12 @@ export class FavoritesService {
     this.favoriteMoviesSubject.next(this.favoriteMovies);
   }
 
-  addComment(imdbID: string, comment: string): void {
-    const movieIndex = this.favoriteMovies.findIndex(
-      (movie) => movie.imdbID === imdbID
-    );
-
-    if (movieIndex !== -1) {
-      this.favoriteMovies[movieIndex].comments =
-        this.favoriteMovies[movieIndex]?.comments || [];
-      this.favoriteMovies[movieIndex].comments?.push(comment);
-      this.localStorageService.set('favoriteMovies', this.favoriteMovies);
-    }
-  }
-
-  removeComment(imdbID: string, commentIndex: number): void {
-    const movieIndex = this.favoriteMovies.findIndex(
-      (movie) => movie.imdbID === imdbID
-    );
-
-    if (movieIndex !== -1 && this.favoriteMovies[movieIndex]?.comments) {
-      this.favoriteMovies[movieIndex]?.comments?.splice(commentIndex, 1);
-      this.localStorageService.set('favoriteMovies', this.favoriteMovies);
-    }
-  }
-
   removeFromFavorites(imdbID: string): void {
     this.favoriteMovies = this.favoriteMovies.filter(
       (movie) => movie.imdbID !== imdbID
     );
     this.localStorageService.set('favoriteMovies', this.favoriteMovies);
-    this.favoriteMoviesSubject.next(this.favoriteMovies);
+  
   }
 
   filterByType(type: string): Movie[] {
@@ -122,4 +96,18 @@ export class FavoritesService {
   isFavorite(movie: Movie): boolean {
     return this.favoriteMovies.some((m) => m.imdbID === movie.imdbID);
   }
+
+  saveCommentsToLocalStorage(imdbID: string, comments: string[]): void {
+    localStorage.setItem(imdbID, JSON.stringify(comments));
+ }
+
+ loadCommentsFromLocalStorage(): void {
+  this.favoriteMovies.forEach((movie) => {
+    const storedComments = localStorage.getItem(movie.imdbID);
+    if (storedComments) {
+      movie.comments = JSON.parse(storedComments);
+    }
+  });
+}
+
 }

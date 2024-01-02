@@ -95,28 +95,10 @@ export class HomeComponent implements OnInit {
     this.refreshMovies();
   }
 
-  handleCommentEvent(movieId: string, comment: string): void {
-    this.favoritesService.addComment(movieId, comment);
-    this.refreshMovies();
-  }
-
   removeFromFavorites(imdbID: string): void {
     this.favoriteMovies = this.favoriteMovies.filter(
       (movie) => movie.imdbID !== imdbID
     );
     this.localStorageService.set('favoriteMovies', this.favoriteMovies);
-  }
-
-  addComment(imdbID: string, comment: string): void {
-    if (this.commentToAdd) {
-      this.favoritesService.addComment(imdbID, this.commentToAdd);
-      this.commentToAdd = '';
-      this.refreshMovies();
-    }
-  }
-
-  removeComment(imdbID: string, commentIndex: number): void {
-    this.favoritesService.removeComment(imdbID, commentIndex);
-    this.refreshMovies();
   }
 }

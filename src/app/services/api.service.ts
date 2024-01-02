@@ -1,25 +1,33 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../enviroment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private apiUrl = 'https://www.omdbapi.com/';
-  private apiKey = '71a5452b';
+  private apiUrl = environment.apiUrl;
+  private apiKey = environment.apiKey;
 
   constructor(private http: HttpClient) {}
 
   searchMovies(query: string, page: number = 1, resultsPerPage: number = 5): Observable<any> {
-    const url = `${this.apiUrl}?s=${query}&apikey=${this.apiKey}&page=${page}&r=${resultsPerPage}`;
-    return this.http.get(url);
+    let params = new HttpParams()
+      .set('s', query)
+      .set('apikey', this.apiKey)
+      .set('page', page.toString())
+      .set('r', resultsPerPage.toString());
+
+    return this.http.get(this.apiUrl, { params });
   }
 
   openDetails(detailID: string): Observable<any> {
-    const url = `${this.apiUrl}?i=${detailID}&apikey=${this.apiKey}`;
-    return this.http.get(url);
+    let params = new HttpParams()
+      .set('i', detailID)
+      .set('apikey', this.apiKey);
+      
+    return this.http.get(this.apiUrl, { params });
   }
-
 }

@@ -1,28 +1,3 @@
-<form>
-  <h4>Filtrar Por:</h4>
-  <mat-form-field appearance="fill">
-    <mat-label>Año</mat-label>
-    <input
-      matInput
-      type="number"
-      [(ngModel)]="selectedFilter"
-      name="selectedFilter"
-      placeholder="Escribe el año"
-    />
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Tipo</mat-label>
-    <mat-select [(ngModel)]="selectedType" name="type">
-      <mat-option value="">Todos</mat-option>
-      <mat-option value="movie">Película</mat-option>
-      <mat-option value="series">Serie</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="applyFilters()">
-    Aplicar Filtros
-  </button>
-</form>
-
 <div
   *ngIf="favoriteMovies | async as favoriteMovies"
   class="favorite-container"
@@ -30,26 +5,83 @@
   <div *ngFor="let movie of favoriteMovies" class="favorites">
     <mat-card class="example-card">
       <mat-card-header class="favorite-card-header">
-        <mat-card-title>{{ movie.Title | truncateText: 18 }}</mat-card-title>
+        <mat-card-title>{{ movie.Title | truncateText : 18 }}</mat-card-title>
         <mat-card-subtitle>{{ movie.Year }}</mat-card-subtitle>
       </mat-card-header>
       <img
         class="img-favorite-card"
         mat-card-image
-        src="{{ movie.Poster }}"
+        [src]="
+          movie.Poster !== 'N/A'
+            ? movie.Poster
+            : 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101032/112815935-no-hay-icono-de-imagen-disponible-ilustraci%C3%B3n-vectorial-plana.jpg'
+        "
         alt="Photo of {{ movie.Title }}"
-        (click)="openDetails(movie)"
       />
       <mat-card-content class="favorite-card-content">
-        <p>
-          {{ movie.Type }}
-        </p>
-        <button mat-icon-button class="custom-favorite-button" (click)="onToggleFavorite(movie)">
-          <mat-icon>{{ movie.isFavorite ? 'star' : 'star_border' }}</mat-icon>
+        <div class="icons-favorite-card">
+          <button
+            class="view-more-fav"
+            mat-raised-button
+            (click)="onOpenDetails?.(movie)"
+          >
+            . Ver detalles<mat-icon>bubble_chart</mat-icon>
+          </button>
+          <button
+            mat-raised-button
+            class="custom-favorite-button"
+            (click)="onToggleFavorite?.(movie)"
+          >
+            <mat-icon class="mat-icon">{{
+              movie.isFavorite ? "star" : "star_border"
+            }}</mat-icon>
+          </button>
+        </div>
+        <div class="comments-icon-cards">
+          <h5>Comentarios:</h5>
+          <div>
+            <button mat-icon-button (click)="onEnableCommenting?.(movie)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="onToggleComments?.(movie)">
+              <mat-icon>{{
+                movie.showComments ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+          </div>
+        </div>
+        @if(movie.showComments && movie.comments && movie.comments.length > 0){
+        <ul class="list-comments">
+          <li
+            class="individual-comment"
+            *ngFor="let comment of movie.comments; let i = index"
+          >
+            {{ comment }}
+            <button mat-icon-button (click)="onDeleteComment?.(movie, comment)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </li>
+        </ul>
+        } @if(movie.isEditing){
+        <mat-form-field appearance="fill">
+          <mat-label>Agregar Comentario</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="movie.newComment"
+            name="newComment"
+            rows="4"
+            placeholder="Escribe tu comentario"
+          ></textarea>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onAddComment?.(movie)"
+        >
+          Agregar Comentario
         </button>
+        }
       </mat-card-content>
     </mat-card>
   </div>
 </div>
-
-

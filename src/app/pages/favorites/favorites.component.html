@@ -1,6 +1,51 @@
+<form class="form-filter-container">
+  <h4><strong>Filtrar Por:</strong></h4>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Año</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="selectedFilter"
+        name="selectedFilter"
+        placeholder="Escribe el año"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo</mat-label>
+      <mat-select [(ngModel)]="selectedType" name="type">
+        <mat-option value="">Todos</mat-option>
+        <mat-option value="movie">Película</mat-option>
+        <mat-option value="series">Serie</mat-option>
+        <mat-option value="game">Juego</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de Película</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="selectedTitle"
+        name="selectedTitle"
+        placeholder="Escribe el nombre"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="filterAndRefreshMovies()">
+      Aplicar Filtros
+    </button>
+  </div>
+</form>
 <app-favorite-card
-  (applied)="applyFilters($event)"
-  (toggleFavorite)="toggleFavorite($event)"
-  (detailsRequested)="handleDetailsRequest($event)"
-  (favoriteToggled)="onElementClicked($event)"
+  [onAddComment]="addComment"
+  [onDeleteComment]="deleteComment"
+  [onOpenDetails]="openDetails"
+  [onToggleFavorite]="toggleFavorite"
+  [onEnableCommenting]="enableCommenting"
+  [onToggleComments]="toggleComments"
 ></app-favorite-card>
