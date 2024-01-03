@@ -149,5 +149,6 @@ export class FavoritesComponent implements OnInit {
   toggleFavorite(movie: Movie): void {
     movie.isFavorite = !movie.isFavorite;
     this.favoritesService.addOrRemoveFromFavorites(movie);
+    this.filterAndRefreshMovies()
   }
 }
