@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { Movie } from '../interfaces/movie.interface';
-import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../shared/components/modal/modal.component';

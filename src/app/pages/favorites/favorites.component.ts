@@ -14,7 +14,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.css'],
   standalone: true,
-  imports: [FavoriteCardComponent, ModalComponent, MaterialModule, FormsModule, CommonModule],
+  imports: [
+    FavoriteCardComponent,
+    ModalComponent,
+    MaterialModule,
+    FormsModule,
+    CommonModule,
+  ],
 })
 export class FavoritesComponent implements OnInit {
   favoriteMovies: Movie[] = [];
@@ -22,15 +28,13 @@ export class FavoritesComponent implements OnInit {
   selectedType: string = '';
   selectedTitle: string = '';
   commentToAdd: string = '';
-  constructor( 
+  constructor(
     private favoritesService: FavoritesService,
     private apiService: ApiService,
     private dialog: MatDialog
   ) {}
-  
-  ngOnInit() {
-    
-  }
+
+  ngOnInit() {}
 
   openDetails(movie: any): void {
     this.favoritesService.openDetails(movie.imdbID);
@@ -76,57 +80,69 @@ export class FavoritesComponent implements OnInit {
       this.openDetailsModal(details);
     });
   }
-  
+
   openDetailsModal(movieDetails: any): void {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '400px',
-      data: { movieDetails }
+      data: { movieDetails },
     });
   }
 
   filterAndRefreshMovies(): void {
-    const filteredMovies = this.favoritesService.getFavorites().filter(movie => {
-      let includeMovie = true;
-      if (this.selectedFilter) {
-        const filterYear = parseInt(this.selectedFilter, 10);
-        const movieYear = parseInt(movie.Year, 10);
-        includeMovie = !isNaN(movieYear) && movieYear === filterYear;
-      }
-  
-      if (this.selectedType) {
-        includeMovie = includeMovie && movie.Type === this.selectedType;
-      }
+    const filteredMovies = this.favoritesService
+      .getFavorites()
+      .filter((movie) => {
+        let includeMovie = true;
+        if (this.selectedFilter) {
+          const filterYear = parseInt(this.selectedFilter, 10);
+          const movieYear = parseInt(movie.Year, 10);
+          includeMovie = !isNaN(movieYear) && movieYear === filterYear;
+        }
 
-      if (this.selectedTitle) {
-        includeMovie = includeMovie && movie.Title.toLowerCase().includes(this.selectedTitle.toLowerCase());
-      }
-  
-      return includeMovie;
-    });
-    
+        if (this.selectedType) {
+          includeMovie = includeMovie && movie.Type === this.selectedType;
+        }
+
+        if (this.selectedTitle) {
+          includeMovie =
+            includeMovie &&
+            movie.Title.toLowerCase().includes(
+              this.selectedTitle.toLowerCase()
+            );
+        }
+
+        return includeMovie;
+      });
+
     this.favoritesService.favoriteMoviesSubject.next(filteredMovies);
   }
 
   handleCommentEvent(eventData: { imdbID: string; comment: string }): void {
     const { imdbID, comment } = eventData;
-  
-    const movieToUpdate = this.favoriteMovies.find(movie => movie.imdbID === imdbID);
-  
+
+    const movieToUpdate = this.favoriteMovies.find(
+      (movie) => movie.imdbID === imdbID
+    );
+
     if (movieToUpdate) {
       movieToUpdate.comments = movieToUpdate.comments || []; // Inicializa si es undefined
       if (!movieToUpdate.comments.includes(comment)) {
         movieToUpdate.comments.push(comment);
       }
     }
-  } 
+  }
 
   handleDeleteComment(eventData: { imdbID: string; comment: string }): void {
     const { imdbID, comment } = eventData;
-  
-    const movieToUpdate = this.favoriteMovies.find(movie => movie.imdbID === imdbID);
-  
+
+    const movieToUpdate = this.favoriteMovies.find(
+      (movie) => movie.imdbID === imdbID
+    );
+
     if (movieToUpdate && movieToUpdate.comments) {
-      movieToUpdate.comments = movieToUpdate.comments.filter(existingComment => existingComment !== comment);
+      movieToUpdate.comments = movieToUpdate.comments.filter(
+        (existingComment) => existingComment !== comment
+      );
     }
   }
 

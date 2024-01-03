@@ -9,13 +9,18 @@
         [(ngModel)]="selectedFilter"
         name="selectedFilter"
         placeholder="Escribe el año"
+        (input)="filterAndRefreshMovies()"
       />
     </mat-form-field>
   </div>
   <div>
     <mat-form-field appearance="fill">
       <mat-label>Tipo</mat-label>
-      <mat-select [(ngModel)]="selectedType" name="type">
+      <mat-select
+        [(ngModel)]="selectedType"
+        name="type"
+        (selectionChange)="filterAndRefreshMovies()"
+      >
         <mat-option value="">Todos</mat-option>
         <mat-option value="movie">Película</mat-option>
         <mat-option value="series">Serie</mat-option>
@@ -32,20 +37,25 @@
         [(ngModel)]="selectedTitle"
         name="selectedTitle"
         placeholder="Escribe el nombre"
+        (input)="filterAndRefreshMovies()"
       />
     </mat-form-field>
   </div>
   <div>
-    <button mat-raised-button color="primary" (click)="filterAndRefreshMovies()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="filterAndRefreshMovies()"
+    >
       Aplicar Filtros
     </button>
   </div>
 </form>
 <app-favorite-card
-  [onAddComment]="addComment"
-  [onDeleteComment]="deleteComment"
-  [onOpenDetails]="openDetails"
-  [onToggleFavorite]="toggleFavorite"
-  [onEnableCommenting]="enableCommenting"
-  [onToggleComments]="toggleComments"
+  (addComment)="addComment($event)"
+  (deleteComment)="deleteComment($event.movie, $event.comment)"
+  (openDetails)="openDetails($event)"
+  (toggleFavorite)="toggleFavorite($event)"
+  (enableCommenting)="enableCommenting($event)"
+  (toggleComments)="toggleComments($event)"
 ></app-favorite-card>

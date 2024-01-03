@@ -23,14 +23,14 @@
           <button
             class="view-more-fav"
             mat-raised-button
-            (click)="onOpenDetails?.(movie)"
+            (click)="onOpenDetails(movie)"
           >
             . Ver detalles<mat-icon>bubble_chart</mat-icon>
           </button>
           <button
             mat-raised-button
             class="custom-favorite-button"
-            (click)="onToggleFavorite?.(movie)"
+            (click)="onToggleFavorite(movie)"
           >
             <mat-icon class="mat-icon">{{
               movie.isFavorite ? "star" : "star_border"
@@ -40,10 +40,10 @@
         <div class="comments-icon-cards">
           <h5>Comentarios:</h5>
           <div>
-            <button mat-icon-button (click)="onEnableCommenting?.(movie)">
+            <button mat-icon-button (click)="onEnableCommenting(movie)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="onToggleComments?.(movie)">
+            <button mat-icon-button (click)="onToggleComments(movie)">
               <mat-icon>{{
                 movie.showComments ? "visibility_off" : "visibility"
               }}</mat-icon>
@@ -57,7 +57,7 @@
             *ngFor="let comment of movie.comments; let i = index"
           >
             {{ comment }}
-            <button mat-icon-button (click)="onDeleteComment?.(movie, comment)">
+            <button mat-icon-button (click)="onDeleteComment(movie, comment)">
               <mat-icon>delete</mat-icon>
             </button>
           </li>
@@ -76,7 +76,7 @@
         <button
           mat-raised-button
           color="primary"
-          (click)="onAddComment?.(movie)"
+          (click)="onAddComment(movie)"
         >
           Agregar Comentario
         </button>

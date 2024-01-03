@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MaterialModule } from '../../../material/material.module';
 import { FavoritesService } from '../../../services/favorites.service';
 import { CommonModule } from '@angular/common';
@@ -14,14 +14,19 @@ import { Movie } from '../../../interfaces/movie.interface';
   imports: [MaterialModule, CommonModule, FormsModule, TruncateTextPipe],
 })
 export class FavoriteCardComponent implements OnInit {
-  @Input() onOpenDetails: ((movie: Movie) => void) | undefined;
-  @Input() onAddComment: ((movie: Movie) => void) | undefined;
-  @Input() onDeleteComment:
-    | ((movie: Movie, comment: string) => void)
-    | undefined;
-  @Input() onToggleFavorite: ((movie: Movie) => void) | undefined;
-  @Input() onEnableCommenting: ((movie: Movie) => void) | undefined;
-  @Input() onToggleComments: ((movie: Movie) => void) | undefined;
+  @Output() addComment = new EventEmitter<Movie>();
+  @Output() deleteComment = new EventEmitter<{
+    movie: Movie;
+    comment: string;
+  }>();
+  @Output() openDetails = new EventEmitter<Movie>();
+  @Output() toggleFavorite = new EventEmitter<Movie>();
+  @Output() enableCommenting = new EventEmitter<Movie>();
+  @Output() toggleComments = new EventEmitter<Movie>();
+
+  @Input() selectedFilter: number | undefined;
+  @Input() selectedType: string | undefined;
+  @Input() selectedTitle: string | undefined;
 
   favoriteMovies = this.favoritesService.favoriteMoviesSubject;
 
@@ -29,5 +34,29 @@ export class FavoriteCardComponent implements OnInit {
 
   ngOnInit() {
     this.favoritesService.loadCommentsFromLocalStorage();
+  }
+
+  onAddComment(movie: Movie) {
+    this.addComment.emit(movie);
+  }
+
+  onDeleteComment(movie: Movie, comment: string) {
+    this.deleteComment.emit({ movie, comment });
+  }
+
+  onOpenDetails(movie: Movie) {
+    this.openDetails.emit(movie);
+  }
+
+  onToggleFavorite(movie: Movie) {
+    this.toggleFavorite.emit(movie);
+  }
+
+  onEnableCommenting(movie: Movie) {
+    this.enableCommenting.emit(movie);
+  }
+
+  onToggleComments(movie: Movie) {
+    this.toggleComments.emit(movie);
   }
 }
